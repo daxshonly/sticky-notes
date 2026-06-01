@@ -1,22 +1,9 @@
-/**
- * renderer.js — Sticky Notes renderer process
- *
- * Responsibilities:
- *  - Read noteId from the URL query-string
- *  - Restore content, colour, and bounds from localStorage
- *  - Persist content and colour on every change
- *  - Wire up colour swatches and window control buttons
- *  - Receive 'save-bounds' events from main and persist them
- */
-
 (function () {
   'use strict';
 
-  // ─── 1. Identify this window ────────────────────────────────────────────
-  const params   = new URLSearchParams(window.location.search);
-  const noteId   = params.get('noteId') ?? params.get('windowId') ?? '0';
+  const params = new URLSearchParams(window.location.search);
+  const noteId = params.get('noteId') ?? '0';
 
-  /** Namespaced localStorage keys for this specific note */
   const KEYS = {
     content: `note_content_${noteId}`,
     color:   `note_color_${noteId}`,
@@ -25,7 +12,6 @@
     meta:    `note_meta_${noteId}`,
   };
 
-  // ─── 2. DOM refs ─────────────────────────────────────────────────────────
   const noteEl      = document.getElementById('note');
   const noteTitle   = document.getElementById('noteTitle');
   const btnSettings = document.getElementById('btnSettings');
@@ -40,24 +26,14 @@
   const btnMinimize = document.getElementById('btnMinimize');
   const btnClose    = document.getElementById('btnClose');
 
-  // ─── 3. Helpers ──────────────────────────────────────────────────────────
-
-  // Ensure swatch buttons display their data-color (fix white center)
   swatches.forEach(s => {
     const c = s.dataset.color;
     if (c) s.style.backgroundColor = c;
   });
 
-  /**
-   * Apply a background colour to the note and persist it.
-   * Also updates CSS custom properties so the titlebar tint follows.
-   * @param {string} hex
-   */
   function applyColor(hex) {
     noteEl.style.setProperty('--note-bg', hex);
 
-    // Compute a slightly darker variant for the titlebar/footer
-    // Mix with black by 18% to approximate the CSS color-mix used in :root
     const darken = (h, pct) => {
       const r = parseInt(h.slice(1,3), 16);
       const g = parseInt(h.slice(3,5), 16);
@@ -69,16 +45,14 @@
 
     noteEl.style.setProperty('--note-bg-dark', darken(hex, 0.18));
 
-    // Mark the active swatch
     swatches.forEach(s => s.classList.toggle('active', s.dataset.color === hex));
 
     localStorage.setItem(KEYS.color, hex);
     saveNoteMeta();
   }
 
-  /** Update the character-count display in the footer */
   function updateCharCount() {
-    const len = editor.value.replace(/\n$/, '').length; // trim trailing newline
+    const len = editor.value.replace(/\n$/, '').length;
     charCount.textContent = `${len.toLocaleString()} char${len !== 1 ? 's' : ''}`;
   }
 
@@ -197,9 +171,6 @@
     closeSettingsMenu();
   }
 
-  // ─── 4. Restore persisted state ──────────────────────────────────────────
-
-  // Content
   const savedContent = localStorage.getItem(KEYS.content);
   if (savedContent) {
     editor.value = savedContent;
@@ -210,12 +181,10 @@
     noteTitle.value = savedTitle;
   }
 
-  // Colour
   const savedColor = localStorage.getItem(KEYS.color);
   if (savedColor) {
     applyColor(savedColor);
   } else {
-    // Default: apply the first swatch colour and mark it active
     const firstSwatch = swatches[0];
     if (firstSwatch) {
       applyColor(firstSwatch.dataset.color);
@@ -226,17 +195,10 @@
 
   updateCharCount();
 
-  // Move cursor to end of content on load
   if (savedContent) {
-    const range = document.createRange();
-    const sel   = window.getSelection();
-    range.selectNodeContents(editor);
-    range.collapse(false); // collapse to end
-    sel.removeAllRanges();
-    sel.addRange(range);
+    const caret = editor.value.length;
+    editor.setSelectionRange(caret, caret);
   }
-
-  // ─── 5. Persist content on every keystroke ───────────────────────────────
 
   let saveTimer = null;
 
@@ -244,7 +206,6 @@
     updateCharCount();
     saveNoteMeta();
 
-    // Debounce writes to localStorage (300 ms)
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       localStorage.setItem(KEYS.content, editor.value);
@@ -256,9 +217,7 @@
     saveNoteMeta();
   });
 
-  // Also save immediately on paste (covers large content drops)
   editor.addEventListener('paste', (e) => {
-    // Normalise to plain text — prevent pasting rich HTML into the note
     e.preventDefault();
     const text = e.clipboardData.getData('text/plain');
     const start = editor.selectionStart ?? 0;
@@ -267,8 +226,6 @@
     updateCharCount();
     saveNoteMeta();
   });
-
-  // ─── 6. Colour swatch clicks ─────────────────────────────────────────────
 
   swatches.forEach(swatch => {
     swatch.addEventListener('click', () => {
@@ -283,8 +240,6 @@
   btnNumberList.addEventListener('click', () => {
     insertPrefixAtCurrentLine('1.');
   });
-
-  // ─── 7. Window control buttons ───────────────────────────────────────────
 
   btnSettings.addEventListener('click', () => {
     setSettingsMenuOpen(!settingsMenu.classList.contains('open'));
@@ -325,19 +280,15 @@
   });
 
   btnClose.addEventListener('click', () => {
-    // Flush any pending debounced save before closing
     saveAndCloseMenu();
     window.electronAPI.closeNote();
   });
 
-  // ─── 8. Keyboard shortcuts ────────────────────────────────────────────────
   document.addEventListener('keydown', (e) => {
-    // Ctrl+N → new note
     if (e.ctrlKey && e.key === 'n') {
       e.preventDefault();
       window.electronAPI.newNote();
     }
-    // Ctrl+W → close note
     if (e.ctrlKey && e.key === 'w') {
       e.preventDefault();
       clearTimeout(saveTimer);
@@ -364,13 +315,10 @@
     }
   });
 
-  // ─── 9. Receive & persist window bounds from main ────────────────────────
   window.electronAPI.onSaveBounds((bounds) => {
     localStorage.setItem(KEYS.bounds, JSON.stringify(bounds));
   });
 
-  // ─── 10. Auto-focus the editor ───────────────────────────────────────────
-  // Slight delay so the window has finished rendering before we focus
   setTimeout(() => editor.focus(), 80);
 
 })();

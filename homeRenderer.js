@@ -69,25 +69,6 @@
     }).format(new Date(value));
   }
 
-  function makePreview(content) {
-    const lines = content.replace(/\r\n/g, '\n').split('\n');
-    const previewLines = [];
-    let totalChars = 0;
-
-    for (const rawLine of lines) {
-      const line = rawLine.trimEnd();
-      if (!line && previewLines.length === 0) continue;
-
-      const displayLine = line.length > 72 ? `${line.slice(0, 72)}…` : line;
-      previewLines.push(displayLine);
-      totalChars += displayLine.length;
-
-      if (previewLines.length >= 4 || totalChars >= 220) break;
-    }
-
-    return previewLines.join('\n');
-  }
-
   function normalizeNoteColor(value) {
     if (typeof value !== 'string') return '#FFF6B8';
     const trimmed = value.trim();
@@ -107,8 +88,6 @@
           </div>
         </div>
       `;
-
-      syncSelectionUi();
 
       const emptyCreateBtn = document.getElementById('emptyCreateBtn');
       if (emptyCreateBtn) {
@@ -156,9 +135,7 @@
         window.electronAPI.openNote(card.dataset.noteId);
       });
 
-      card.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target && target.closest && target.closest('.note-card-actions, .note-select')) return;
+      card.addEventListener('click', () => {
         const noteId = card.dataset.noteId;
         if (!noteId) return;
         window.electronAPI.openNote(noteId);

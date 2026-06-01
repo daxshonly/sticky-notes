@@ -1,4 +1,4 @@
-/* ─── Reset & base ─────────────────────────────────────────── */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -28,7 +28,7 @@ html, body {
     linear-gradient(135deg, #f6ecd4 0%, #eef3ff 100%);
 }
 
-/* ─── Note card ─────────────────────────────────────────────── */
+
 .note {
   display:        flex;
   flex-direction: column;
@@ -41,7 +41,7 @@ html, body {
   gap:           10px;
 }
 
-/* ─── Titlebar / drag region ────────────────────────────────── */
+
 .titlebar {
   display:          flex;
   align-items:      center;
@@ -51,7 +51,7 @@ html, body {
   border:           1px solid rgba(255,255,255,.55);
   border-radius:    22px;
   box-shadow:       0 12px 32px rgba(0,0,0,.10);
-  /* This makes the entire bar draggable */
+  
   -webkit-app-region: drag;
   user-select:      none;
   flex-shrink:      0;
@@ -146,7 +146,7 @@ html, body {
   font-weight: 800;
 }
 
-/* Buttons inside the titlebar must NOT be draggable */
+
 .titlebar button,
 .titlebar .color-palette,
 .titlebar .win-controls,
@@ -154,7 +154,7 @@ html, body {
   -webkit-app-region: no-drag;
 }
 
-/* ─── Colour swatches ───────────────────────────────────────── */
+
 .color-palette {
   display:    flex;
   gap:        5px;
@@ -184,7 +184,7 @@ html, body {
   transform:    scale(1.15);
 }
 
-/* ─── Window control buttons ────────────────────────────────── */
+
 .win-controls {
   display:    flex;
   gap:        4px;
@@ -215,7 +215,7 @@ html, body {
 
 .btn-close:hover  { background: #e74c3c; color: #fff; }
 
-/* ─── Note body / editor ────────────────────────────────────── */
+
 .note-body {
   flex:       1;
   overflow:   hidden;
@@ -308,7 +308,7 @@ html, body {
 .editor::-webkit-scrollbar-thumb   { background: rgba(0,0,0,.2); border-radius: 3px; }
 .editor::-webkit-scrollbar-track   { background: transparent; }
 
-/* Placeholder via pseudo-element */
+
 .editor:empty::before {
   content:  attr(placeholder);
   color:    rgba(0,0,0,.35);
@@ -316,7 +316,7 @@ html, body {
   font-style: italic;
 }
 
-/* ─── Footer ────────────────────────────────────────────────── */
+
 .note-footer {
   display:        flex;
   align-items:    center;
@@ -327,7 +327,7 @@ html, body {
   border-radius:  18px;
   box-shadow:     0 10px 24px rgba(0,0,0,.08);
   flex-shrink:    0;
-  -webkit-app-region: drag;  /* bottom bar also draggable */
+  -webkit-app-region: drag;  
 }
 
 .char-count {
@@ -338,7 +338,7 @@ html, body {
   user-select: none;
 }
 
-/* Resize grip indicator (purely decorative — Electron handles resize) */
+
 .resize-hint {
   font-size:  14px;
   color:      rgba(0,0,0,.30);
@@ -406,18 +406,18 @@ html, body {
   }
 }
 
-/* ─── Scrollbar for the whole window (Chromium) ─────────────── */
+
 ::-webkit-scrollbar         { width: 6px; }
 ::-webkit-scrollbar-thumb   { background: rgba(0,0,0,.18); border-radius: 3px; }
 ::-webkit-scrollbar-track   { background: transparent; }
 
-/* ─── Focus ring for keyboard accessibility ─────────────────── */
+
 :focus-visible {
   outline: 2px solid rgba(0,0,0,.4);
   outline-offset: 1px;
 }
 
-/* ─── Home screen ──────────────────────────────────────────── */
+
 body.home-body {
   font-family: var(--font-body);
   background:

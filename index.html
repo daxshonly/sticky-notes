@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!--
-    CSP: only allow scripts/styles from our own origin.
-    Adjust if you add external fonts via CDN.
-  -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;" />
   <title>Sticky Note</title>
 
-  <!-- Google Fonts: Permanent Marker for the heading, Nunito for body text -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Permanent+Marker&display=swap"
@@ -23,10 +18,8 @@
 
   <div class="note" id="note">
 
-    <!-- ── Title bar / drag handle ───────────────────────────── -->
     <div class="titlebar" id="titlebar">
 
-      <!-- Left cluster: settings menu -->
       <div class="titlebar-left">
         <div class="settings-wrap">
           <button class="ctrl-btn btn-settings" id="btnSettings" title="Settings" aria-label="Settings">⚙</button>
@@ -50,15 +43,13 @@
         </div>
       </div>
 
-      <!-- Right cluster: window controls -->
       <div class="win-controls" id="winControls">
         <button class="ctrl-btn btn-minimize" id="btnMinimize" title="Minimise"  aria-label="Minimise">−</button>
         <button class="ctrl-btn btn-close" id="btnClose" title="Close" aria-label="Close">✕</button>
       </div>
 
-    </div><!-- /.titlebar -->
+    </div>
 
-    <!-- ── Note body ──────────────────────────────────────────── -->
     <div class="note-body">
       <input
         class="note-title"
@@ -80,13 +71,12 @@
       ></textarea>
     </div>
 
-    <!-- ── Footer: character count ───────────────────────────── -->
     <div class="note-footer">
       <span class="char-count" id="charCount">0 chars</span>
       <span class="resize-hint">⤡</span>
     </div>
 
-  </div><!-- /.note -->
+  </div>
 
   <script src="renderer.js"></script>
 </body>
