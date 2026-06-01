@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;" />
+  <title>Sticky Notes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Permanent+Marker&display=swap"
+        rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="home-body">
+  <main class="home-shell">
+    <header class="home-topbar">
+      <div class="home-branding">
+        <div class="home-kicker">Sticky Notes</div>
+        <h1 class="home-title">Your saved notes</h1>
+      </div>
+
+      <div class="home-window-controls">
+        <button class="ctrl-btn btn-restore" id="btnRestore" title="Restore" aria-label="Restore">▢</button>
+        <button class="ctrl-btn btn-minimize" id="btnMinimize" title="Minimize" aria-label="Minimize">−</button>
+        <button class="ctrl-btn btn-close" id="btnClose" title="Close" aria-label="Close">✕</button>
+      </div>
+    </header>
+
+    <section class="home-hero">
+      <p class="home-subtitle">
+        Open an existing note to edit it, delete a note, or create a fresh one to start writing.
+      </p>
+
+      <div class="home-actions">
+        <button class="home-button primary" id="createNewBtn" type="button">Create new note</button>
+      </div>
+    </section>
+
+    <section class="notes-panel" aria-label="Saved notes list">
+      <div class="notes-grid" id="notesGrid"></div>
+    </section>
+  </main>
+
+  <script src="homeRenderer.js"></script>
+</body>
+</html>

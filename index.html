@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--
+    CSP: only allow scripts/styles from our own origin.
+    Adjust if you add external fonts via CDN.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;" />
+  <title>Sticky Note</title>
+
+  <!-- Google Fonts: Permanent Marker for the heading, Nunito for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Permanent+Marker&display=swap"
+        rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="note" id="note">
+
+    <!-- ── Title bar / drag handle ───────────────────────────── -->
+    <div class="titlebar" id="titlebar">
+
+      <!-- Left cluster: settings menu -->
+      <div class="titlebar-left">
+        <div class="settings-wrap">
+          <button class="ctrl-btn btn-settings" id="btnSettings" title="Settings" aria-label="Settings">⚙</button>
+
+          <div class="settings-menu" id="settingsMenu" aria-hidden="true">
+            <div class="settings-section">
+              <div class="settings-label">Colour</div>
+              <div class="color-palette" id="colorPalette" aria-label="Choose note colour">
+                <button class="swatch" data-color="#FFF6B8" style="background:#FFF6B8;" title="Light Yellow"  aria-label="Light Yellow"></button>
+                <button class="swatch" data-color="#D8F3DC" style="background:#D8F3DC;" title="Light Green"   aria-label="Light Green"></button>
+                <button class="swatch" data-color="#D6EEFF" style="background:#D6EEFF;" title="Light Blue"    aria-label="Light Blue"></button>
+                <button class="swatch" data-color="#FFDCE7" style="background:#FFDCE7;" title="Light Pink"    aria-label="Light Pink"></button>
+                <button class="swatch" data-color="#E9DEFF" style="background:#E9DEFF;" title="Light Lavender" aria-label="Light Lavender"></button>
+                <button class="swatch" data-color="#FFE4C6" style="background:#FFE4C6;" title="Light Peach"   aria-label="Light Peach"></button>
+              </div>
+            </div>
+
+            <button class="settings-item" id="btnMainMenu" type="button">Main menu</button>
+            <button class="settings-item danger" id="btnDeleteList" type="button">Delete list</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right cluster: window controls -->
+      <div class="win-controls" id="winControls">
+        <button class="ctrl-btn btn-minimize" id="btnMinimize" title="Minimise"  aria-label="Minimise">−</button>
+        <button class="ctrl-btn btn-close" id="btnClose" title="Close" aria-label="Close">✕</button>
+      </div>
+
+    </div><!-- /.titlebar -->
+
+    <!-- ── Note body ──────────────────────────────────────────── -->
+    <div class="note-body">
+      <input
+        class="note-title"
+        id="noteTitle"
+        type="text"
+        placeholder="Note title"
+        aria-label="Note title"
+      />
+      <div class="list-toolbar" aria-label="List helpers">
+        <button class="list-tool-btn" id="btnBulletList" type="button" title="Insert bullet list">• Bullet</button>
+        <button class="list-tool-btn" id="btnNumberList" type="button" title="Insert numbered list">1. Numbered</button>
+      </div>
+      <textarea
+        class="editor"
+        id="editor"
+        spellcheck="true"
+        placeholder="Type your note…"
+        aria-label="Note content"
+      ></textarea>
+    </div>
+
+    <!-- ── Footer: character count ───────────────────────────── -->
+    <div class="note-footer">
+      <span class="char-count" id="charCount">0 chars</span>
+      <span class="resize-hint">⤡</span>
+    </div>
+
+  </div><!-- /.note -->
+
+  <script src="renderer.js"></script>
+</body>
+</html>

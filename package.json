@@ -1,0 +1,36 @@
+{
+  "name": "sticky-notes",
+  "version": "1.0.0",
+  "description": "Always-on-top sticky notes for Windows",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.yourname.stickynotes",
+    "productName": "Sticky Notes",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "home.html",
+      "homeRenderer.js",
+      "index.html",
+      "style.css",
+      "renderer.js",
+      "assets/**"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
