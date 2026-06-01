@@ -88,6 +88,12 @@
     return previewLines.join('\n');
   }
 
+  function normalizeNoteColor(value) {
+    if (typeof value !== 'string') return '#FFF6B8';
+    const trimmed = value.trim();
+    return /^#[0-9a-fA-F]{6}$/.test(trimmed) ? trimmed : '#FFF6B8';
+  }
+
   function renderNotes() {
     const notes = readStoredNotes();
 
@@ -112,7 +118,7 @@
     }
 
     grid.innerHTML = notes.map(note => `
-      <article class="note-card" data-note-id="${note.id}">
+      <article class="note-card" data-note-id="${note.id}" style="--note-card-bg: ${normalizeNoteColor(note.color)};">
         <div class="note-card-header">
           <div class="note-card-content">
             <h3>${escapeHtml(note.title)}</h3>

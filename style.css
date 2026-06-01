@@ -547,7 +547,7 @@ body.home-body {
 }
 
 .note-card {
-  background: #fffdf7;
+  background: var(--note-card-bg, #fffdf7);
   border: 1px solid rgba(0,0,0,.08);
   border-radius: 18px;
   padding: 12px;
