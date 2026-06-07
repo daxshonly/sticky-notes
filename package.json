@@ -5,29 +5,24 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --win --x64",
-    "dist:store": "electron-builder --win appx --x64",
-    "dist:windows": "electron-builder --win --x64"
+    "dist": "electron-builder --win --x64"
   },
   "build": {
     "appId": "daxshonly.StickyNotesPro.Win32",
     "productName": "Sticky Notes",
     "win": {
       "target": [
-        "appx"
+        "nsis",
+        "portable"
       ],
       "icon": "assets/logo.png"
     },
-    "appx": {
-      "applicationId": "daxshonly.StickyNotesPro.Win32",
-      "identityName": "daxshonly.StickyNotesPro.Win32",
-      "publisher": "CN=daxshonly, O=daxshonly, C=IN",
-      "publisherDisplayName": "daxshonly",
-      "displayName": "Sticky Notes",
-      "backgroundColor": "#FFF6B8",
-      "languages": [
-        "en-US"
-      ]
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Sticky Notes"
     },
     "directories": {
       "output": "dist"
@@ -42,9 +37,9 @@
       "renderer.js",
       "assets/**"
     ]
-  },
+  },git 
   "devDependencies": {
     "electron": "^42.3.2",
-    "electron-builder": "^26.8.1"
+    "electron-builder": "^26.15.0"
   }
 }
