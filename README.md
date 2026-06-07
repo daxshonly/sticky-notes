@@ -1,5 +1,4 @@
-`![Application Preview](assets/screenshot.png)`
-# 📌 Sticky Notes
+# 📌 Sticky-Notes
 
 A lightweight, clean, and **always-on-top** sticky notes desktop application designed to boost your daily productivity. Keep your thoughts, daily tasks, and quick references directly on your desktop without cluttering your browser tabs.
 
