@@ -1,4 +1,5 @@
 # 📌 Sticky-Notes
+![Sticky Notes Demo](assets/video.gif)
 
 A lightweight, clean, and **always-on-top** sticky notes desktop application designed to boost your daily productivity. Keep your thoughts, daily tasks, and quick references directly on your desktop without cluttering your browser tabs.
 
@@ -72,3 +73,4 @@ To package production binaries natively on your own local Windows machine, trigg
     ```bash
     npm run dist
     ```
+## Made with ❤️ by @daxshonly
