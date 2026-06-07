@@ -37,7 +37,7 @@
       "renderer.js",
       "assets/**"
     ]
-  },git 
+  },
   "devDependencies": {
     "electron": "^42.3.2",
     "electron-builder": "^26.15.0"
